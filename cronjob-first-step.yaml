@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: first-step-cronjob
+spec:
+  schedule: "* * * * *"  # 毎分実行
+  successfulJobsHistoryLimit: 3   # 成功したジョブの履歴を3つだけ保持
+  failedJobsHistoryLimit: 1       # 失敗したジョブの履歴を1つだけ保持
+  jobTemplate:
+    spec:
+      backoffLimit: 3 # リトライは3回まで
+      template:
+        spec:
+          containers:
+            - name: first-step-container
+              image: asia-northeast1-docker.pkg.dev/ai-project-d1f40/argo/first-step
+          restartPolicy: Never

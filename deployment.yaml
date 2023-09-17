@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: first-step-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: first-step
+  template:
+    metadata:
+      labels:
+        app: first-step
+    spec:
+      containers:
+      - name: first-step-container
+        image: asia-northeast1-docker.pkg.dev/ai-project-d1f40/argo/first-step
