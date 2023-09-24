@@ -2,8 +2,9 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: first-step-cronjob
+  labels:
+    tags.datadoghq.com/service: gke-argocd-batch
 spec:
-  schedule: "* * * * *"  # 毎分実行
   successfulJobsHistoryLimit: 3   # 成功したジョブの履歴を3つだけ保持
   failedJobsHistoryLimit: 1       # 失敗したジョブの履歴を1つだけ保持
   jobTemplate:
@@ -13,5 +14,5 @@ spec:
         spec:
           containers:
             - name: first-step-container
-              image: asia-northeast1-docker.pkg.dev/ai-project-d1f40/argo/first-step
+              image: asia-northeast1-docker.pkg.dev/planet-4f7c6/gke-argocd/first-step
           restartPolicy: Never

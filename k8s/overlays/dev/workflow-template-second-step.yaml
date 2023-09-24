@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: second-step-workflow-template
+spec:
+  entrypoint: second-step-job
+  templates:
+    - name: second-step-job
+      serviceAccountName: argocd
+      container:
+        name: second-step-container
+        image: asia-northeast1-docker.pkg.dev/planet-4f7c6/argocd/second-step
+        command:
+          - "./second-batch"

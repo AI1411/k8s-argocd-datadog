@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: batch-app
+  namespace: argocd
+  labels:
+    service: planet-batch
+    cluster: planet
+    env: dev
+spec:
+  project: dev-planet
+  source:
+    repoURL: 'https://your-git-repo-url.git'  # このURLを実際のGitリポジトリURLに置き換える
+    path: path-to-your-app-in-the-repo/k8s  # このパスを実際のリポジトリ内のアプリのパスに置き換える
+    targetRevision: HEAD  # 使用するリビジョンを指定します。例: master, main, or specific git commit, etc.
+    directory:
+      recurse: true
+      kustomize:
+        namePrefix: dev-  # 必要に応じてnamePrefixを調整してください
+        kustomizationPath: overlays/dev  # `overlays/dev`をデプロイメントの環境として指定
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: your-target-namespace  # デプロイ先のKubernetes namespace名を指定
+  syncPolicy:
+    automated:  # 自動的な同期を有効にする場合はこのセクションを含めます
+      prune: true
+      selfHeal: true

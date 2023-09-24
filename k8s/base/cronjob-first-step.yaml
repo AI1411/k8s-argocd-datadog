@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: second-step-cronjob
+  name: first-step-cronjob
 spec:
   schedule: "* * * * *"  # 毎分実行
   successfulJobsHistoryLimit: 3   # 成功したジョブの履歴を3つだけ保持
@@ -12,6 +12,6 @@ spec:
       template:
         spec:
           containers:
-            - name: second-step-container
-              image: asia-northeast1-docker.pkg.dev/ai-project-d1f40/argo/second-step
+            - name: first-step-container
+              image: asia-northeast1-docker.pkg.dev/planet-4f7c6/gke-argocd/first-step
           restartPolicy: Never

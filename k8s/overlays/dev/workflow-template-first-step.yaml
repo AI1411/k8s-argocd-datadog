@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: first-step-workflow-template
+spec:
+  entrypoint: first-step-job
+  templates:
+    - name: first-step-job
+      serviceAccountName: argocd
+      container:
+        name: first-step-container
+        image: asia-northeast1-docker.pkg.dev/planet-4f7c6/argocd/first-step
+        command:
+          - "./first-batch"

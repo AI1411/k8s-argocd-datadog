@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: third-step-workflow-template
+spec:
+  entrypoint: third-step-job
+  templates:
+    - name: third-step-job
+      serviceAccountName: argocd
+      container:
+        name: third-step-container
+        image: asia-northeast1-docker.pkg.dev/planet-4f7c6/argocd/third-step
+        command:
+          - "./third-batch"

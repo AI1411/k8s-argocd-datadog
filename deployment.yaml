@@ -1,17 +1,35 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: batch/v1
+kind: CronJob
 metadata:
-  name: first-step-deployment
+  name: first-step-cronjob
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: first-step
-  template:
-    metadata:
-      labels:
-        app: first-step
+  failedJobsHistoryLimit: 1
+  jobTemplate:
     spec:
-      containers:
-      - name: first-step-container
-        image: asia-northeast1-docker.pkg.dev/ai-project-d1f40/argo/first-step
+      backoffLimit: 3
+      template:
+        spec:
+          containers:
+            - image: asia-northeast1-docker.pkg.dev/planet-4f7c6/gke-argocd/first-step
+              name: first-step-container
+          restartPolicy: Never
+  schedule: '* * * * *'
+  successfulJobsHistoryLimit: 3
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: second-step-cronjob
+spec:
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      backoffLimit: 3
+      template:
+        spec:
+          containers:
+            - image: asia-northeast1-docker.pkg.dev/planet-4f7c6/gke-argocd/second-step
+              name: second-step-container
+          restartPolicy: Never
+  schedule: '* * * * *'
+  successfulJobsHistoryLimit: 3

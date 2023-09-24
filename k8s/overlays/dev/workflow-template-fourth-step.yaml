@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: fourth-step-workflow-template
+spec:
+  entrypoint: fourth-step-job
+  templates:
+    - name: fourth-step-job
+      serviceAccountName: argocd
+      container:
+        name: fourth-step-container
+        image: asia-northeast1-docker.pkg.dev/planet-4f7c6/argocd/fourth-step
+        command:
+          - "./fourth-batch"

@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: CronWorkflow
+metadata:
+  name: combined-steps-cron
+spec:
+  schedule: "0 0 * * *"
+  workflowSpec:
+    serviceAccountName: argocd
+    entrypoint: main
+    templates:
+      - name: main
+        steps:
+          - - name: execute-first-step
+              templateRef:
+                name: first-step-workflow-template
+                template: first-step-job
+          - - name: execute-second-step
+              templateRef:
+                name: second-step-workflow-template
+                template: second-step-job
+          - - name: execute-third-step
+              templateRef:
+                name: third-step-workflow-template
+                template: third-step-job
+            - name: execute-fourth-step
+              templateRef:
+                name: fourth-step-workflow-template
+                template: fourth-step-job
+            - name: execute-fifth-step
+              templateRef:
+                name: fifth-step-workflow-template
+                template: fifth-step-job

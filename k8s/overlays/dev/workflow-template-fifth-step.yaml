@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: fifth-step-workflow-template
+spec:
+  entrypoint: fifth-step-job
+  templates:
+    - name: fifth-step-job
+      serviceAccountName: argocd
+      container:
+        name: fifth-step-container
+        image: asia-northeast1-docker.pkg.dev/planet-4f7c6/argocd/fifth-step
+        command:
+          - "./fifth-batch"
