@@ -9,6 +9,6 @@ spec:
       serviceAccountName: argocd
       container:
         name: fourth-step-container
-        image: asia-northeast1-docker.pkg.dev/planet-4f7c6/argocd/fourth-step
+        image: asia-northeast1-docker.pkg.dev/planet-4f7c6/gke-argocd/fourth-step
         command:
           - "./fourth-batch"

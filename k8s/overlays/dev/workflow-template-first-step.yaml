@@ -9,6 +9,6 @@ spec:
       serviceAccountName: argocd
       container:
         name: first-step-container
-        image: asia-northeast1-docker.pkg.dev/planet-4f7c6/argocd/first-step
+        image: asia-northeast1-docker.pkg.dev/planet-4f7c6/gke-argocd/first-step
         command:
           - "./first-batch"

@@ -23,12 +23,25 @@ open http://$(kubectl get svc argocd-server -n argocd -o jsonpath='{.status.load
 kubectl -n argocd get secret/argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
 ```
 
-### create app
+### argo Workflowの環境構築
 ```bash
-argocd app create first-step \
-  --repo https://github.com/YOUR_REPO_URL.git \
-  --path PATH_TO_YOUR_MANIFEST_DIRECTORY \
-  --dest-namespace.yaml NAMESPACE_YOU_WANT_TO_DEPLOY \
-  --dest-server https://kubernetes.default.svc \
-  --sync-policy automated
+# install
+kubectl create namespace argo
+kubectl apply -n argo -f https://github.com/argoproj/argo-workflows/releases/download/v3.4.11/install.yaml
+# argo-serverのServiceをLoadBalancerに変更
+kubectl patch svc argo-server -n argo -p '{"spec": {"type": "LoadBalancer"}}'
+# 外部IPの確認
+kubectl get svc argo-server -n argo
+# 認証を変更
+kubectl patch deployment \
+  argo-server \
+  --namespace argo \
+  --type='json' \
+  -p='[{"op": "replace", "path": "/spec/template/spec/containers/0/args", "value": [
+  "server",
+  "--auth-mode=server"
+]}]'
+# ブラウザで開く
+export URL=https://$(kubectl get svc argo-server -n argo -o jsonpath='{.status.loadBalancer.ingress[0].ip}'):2746
+open $URL
 ```
