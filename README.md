@@ -45,3 +45,12 @@ kubectl patch deployment \
 export URL=https://$(kubectl get svc argo-server -n argo -o jsonpath='{.status.loadBalancer.ingress[0].ip}'):2746
 open $URL
 ```
+
+### argo Workflowの実行権限追加
+```bash
+# create serviceaccount
+kubectl create serviceaccount argocd -n argocd
+# apply role
+kubectl apply -f role.yaml -n argocd
+kubectl apply -f rolebinding.yaml -n argocd
+```

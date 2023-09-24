@@ -1,0 +1,14 @@
+# rolebinding.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: workflow-rolebinding
+  namespace: argocd
+subjects:
+  - kind: ServiceAccount
+    name: argocd
+    namespace: argocd
+roleRef:
+  kind: Role
+  name: workflow-role
+  apiGroup: rbac.authorization.k8s.io
