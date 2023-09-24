@@ -2,6 +2,8 @@ apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
   name: third-step-workflow-template
+  labels:
+    tags.datadoghq.com/env: "dev"
 spec:
   entrypoint: third-step-job
   templates:

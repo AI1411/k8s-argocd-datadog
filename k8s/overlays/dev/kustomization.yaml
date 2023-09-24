@@ -10,3 +10,34 @@ resources:
 patches:
   - path: cronjob-first-step.yaml
   - path: cronjob-second-step.yaml
+patchesJson6902:
+  - path: common-env.yaml
+    target:
+      group: argoproj.io
+      version: v1alpha1
+      kind: WorkflowTemplate
+      name: first-step-workflow-template
+  - path: common-env.yaml
+    target:
+      group: argoproj.io
+      version: v1alpha1
+      kind: WorkflowTemplate
+      name: second-step-workflow-template
+  - path: common-env.yaml
+    target:
+      group: argoproj.io
+      version: v1alpha1
+      kind: WorkflowTemplate
+      name: third-step-workflow-template
+  - path: common-env.yaml
+    target:
+      group: argoproj.io
+      version: v1alpha1
+      kind: WorkflowTemplate
+      name: fourth-step-workflow-template
+  - path: common-env.yaml
+    target:
+      group: argoproj.io
+      version: v1alpha1
+      kind: WorkflowTemplate
+      name: fifth-step-workflow-template

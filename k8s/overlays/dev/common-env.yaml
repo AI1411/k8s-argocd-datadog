@@ -1,0 +1,7 @@
+- op: add
+  path: /spec/templates/0/container/env
+  value:
+    - name: DD_ENV
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.labels['tags.datadoghq.com/env']

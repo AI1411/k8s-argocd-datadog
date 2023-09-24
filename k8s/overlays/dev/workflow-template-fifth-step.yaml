@@ -2,6 +2,8 @@ apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
   name: fifth-step-workflow-template
+  labels:
+    tags.datadoghq.com/env: "dev"
 spec:
   entrypoint: fifth-step-job
   templates:
