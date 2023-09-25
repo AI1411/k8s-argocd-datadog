@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  first:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: final-first
+    command: /first-app
+    image: asia-northeast1-docker.pkg.dev/${GCP_PROJECT_ID}/${GCP_REPOSITORY_NAME}/first-step
+  second:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: final-second
+    command: /second-app
+    image: asia-northeast1-docker.pkg.dev/${GCP_PROJECT_ID}/${GCP_REPOSITORY_NAME}/second-step
+  third:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: final-third
+    command: /third-app
+    image: asia-northeast1-docker.pkg.dev/${GCP_PROJECT_ID}/${GCP_REPOSITORY_NAME}/third-step
+  fourth:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: final-fourth
+    command: /fourth-app
+    image: asia-northeast1-docker.pkg.dev/${GCP_PROJECT_ID}/${GCP_REPOSITORY_NAME}/fourth-step
+  fifth:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: final-fifth
+    command: /fifth-app
+    image: asia-northeast1-docker.pkg.dev/${GCP_PROJECT_ID}/${GCP_REPOSITORY_NAME}/fifth-step
