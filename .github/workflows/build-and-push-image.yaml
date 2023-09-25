@@ -40,7 +40,7 @@ jobs:
         run: |
           IFS=',' read -ra DIRS <<< "${{ steps.get_changed_dir.outputs.dirs }}"
           for dir in "${DIRS[@]}"; do
-            docker-compose -f ${{ github.workspace }}/docker-compose.yml build "$dir"
-            docker-compose -f ${{ github.workspace }}/docker-compose.yml push "$dir"
+            docker-compose -f ${{ github.workspace }}/docker-compose.yaml build "$dir"
+            docker-compose -f ${{ github.workspace }}/docker-compose.yaml push "$dir"
           done
       
