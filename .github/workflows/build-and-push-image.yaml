@@ -21,7 +21,7 @@ jobs:
           fetch-depth: 0
 
       - name: Login to Artifact Registry
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
           registry: ${{ secrets.GCP_PROJECT_ID }}-docker.pkg.dev
           username: _json_key
