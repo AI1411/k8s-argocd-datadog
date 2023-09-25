@@ -28,9 +28,10 @@ jobs:
       - name: Determine changed directories
         id: get_changed_dir
         run: |
-          dirs=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -E '^cmd/batch/(first|second|third|fourth|fifth)/' | sed -E 's@^cmd/batch/([^/]*)/.*@\1@' | sort -u)
+          git fetch
+          dirs=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -E '^cmd/batch/(first|second|third|fourth|fifth)/main.go' | sed -E 's@^cmd/batch/([^/]*)/.*@\1@' | sort -u)
           echo "Changed directories: $dirs"
-          echo "::set-output name=dirs::$dirs"
+          echo "dirs=$dirs" >> $GITHUB_ENV
 
       - name: Build and push using docker-compose
         if: steps.get_changed_dir.outputs.dirs != ''

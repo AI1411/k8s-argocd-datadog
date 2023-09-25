@@ -2,5 +2,6 @@
 <project version="4">
   <component name="KubernetesSettings">
     <option name="apiVersion" value="1.27" />
+    <option name="contextName" value="gke_planet-4f7c6_asia-northeast1_planet" />
   </component>
 </project>
