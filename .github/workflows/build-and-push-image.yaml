@@ -31,14 +31,15 @@ jobs:
         id: get_changed_dir
         run: |
           git fetch
-          dirs=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -E '^cmd/batch/(first|second|third|fourth|fifth)' | sed -E 's@^cmd/batch/([^/]*)/.*@\1@' | sort -u)
+          dirs=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -E '^cmd/batch/(first|second|third|fourth|fifth)' | sed -E 's@^cmd/batch/([^/]*)/.*@\1@' | sort -u | tr '\n' ',')
           echo "Changed directories: $dirs"
           echo "dirs=$dirs" >> $GITHUB_ENV
 
       - name: Build and push using docker-compose
         if: steps.get_changed_dir.outputs.dirs != ''
         run: |
-          for dir in ${{ steps.get_changed_dir.outputs.dirs }}; do
-            docker-compose -f docker-compose.yml build $dir
-            docker-compose -f docker-compose.yml push $dir
+          IFS=',' read -ra DIRS <<< "${{ steps.get_changed_dir.outputs.dirs }}"
+          for dir in "${DIRS[@]}"; do
+            docker-compose -f docker-compose.yml build "$dir"
+            docker-compose -f docker-compose.yml push "$dir"
           done
