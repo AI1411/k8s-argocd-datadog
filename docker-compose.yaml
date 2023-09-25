@@ -7,32 +7,32 @@ services:
       dockerfile: Dockerfile
       target: final-first
     command: /first-app
-    image: asia-northeast1-docker.pkg.dev/${GCP_PROJECT_ID}/${GCP_REPOSITORY_NAME}/first-step
+    image: asia-northeast1-docker.pkg.dev/${GCP_PROJECT_ID}/gke-argocd/first-step
   second:
     build:
       context: .
       dockerfile: Dockerfile
       target: final-second
     command: /second-app
-    image: asia-northeast1-docker.pkg.dev/${GCP_PROJECT_ID}/${GCP_REPOSITORY_NAME}/second-step
+    image: asia-northeast1-docker.pkg.dev/${GCP_PROJECT_ID}/gke-argocd/second-step
   third:
     build:
       context: .
       dockerfile: Dockerfile
       target: final-third
     command: /third-app
-    image: asia-northeast1-docker.pkg.dev/${GCP_PROJECT_ID}/${GCP_REPOSITORY_NAME}/third-step
+    image: asia-northeast1-docker.pkg.dev/${GCP_PROJECT_ID}/gke-argocd/third-step
   fourth:
     build:
       context: .
       dockerfile: Dockerfile
       target: final-fourth
     command: /fourth-app
-    image: asia-northeast1-docker.pkg.dev/${GCP_PROJECT_ID}/${GCP_REPOSITORY_NAME}/fourth-step
+    image: asia-northeast1-docker.pkg.dev/${GCP_PROJECT_ID}/gke-argocd/fourth-step
   fifth:
     build:
       context: .
       dockerfile: Dockerfile
       target: final-fifth
     command: /fifth-app
-    image: asia-northeast1-docker.pkg.dev/${GCP_PROJECT_ID}/${GCP_REPOSITORY_NAME}/fifth-step
+    image: asia-northeast1-docker.pkg.dev/${GCP_PROJECT_ID}/gke-argocd/fifth-step

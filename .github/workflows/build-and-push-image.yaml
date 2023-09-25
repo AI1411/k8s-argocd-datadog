@@ -24,10 +24,18 @@ jobs:
           username: _json_key
           password: ${{ secrets.GCP_SA_KEY }}
 
-      - name: Build and push image
+      - name: Determine changed directories
+        id: get_changed_dir
+        run: |
+          dirs=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^cmd/batch/' | sed -E 's@(.*)/@\1@' | sort -u)
+          echo "Changed directories: $dirs"
+          echo "::set-output name=dirs::$dirs"
+
+      - name: Build and push changed directories
+        if: steps.get_changed_dir.outputs.dirs != ''
         uses: docker/build-push-action@v2
         with:
-          context: cmd/batch
-          file: ./Dockerfile
+          context: ${{ steps.get_changed_dir.outputs.dirs }}
+          file: ${{ steps.get_changed_dir.outputs.dirs }}/Dockerfile
           push: true
-          tags: ${{ secrets.GCP_PROJECT_ID }}-docker.pkg.dev/my-repository/my-image:latest
+          tags: ${{ secrets.GCP_PROJECT_ID }}-docker.pkg.dev/gke-argocd/${{ steps.get_changed_dir.outputs.dirs }}-step:latest
