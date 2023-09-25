@@ -36,6 +36,9 @@ jobs:
           echo "::set-output name=dirs::$dirs"
 
       - name: Build and push using docker-compose
+        env:
+          GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
         if: steps.get_changed_dir.outputs.dirs != ''
         run: |
           IFS=',' read -ra DIRS <<< "${{ steps.get_changed_dir.outputs.dirs }}"
