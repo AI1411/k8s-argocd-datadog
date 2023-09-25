@@ -29,7 +29,7 @@ jobs:
         id: get_changed_dir
         run: |
           git fetch
-          dirs=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -E '^cmd/batch/(first|second|third|fourth|fifth)/main.go' | sed -E 's@^cmd/batch/([^/]*)/.*@\1@' | sort -u)
+          dirs=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -E '^cmd/batch/(first|second|third|fourth|fifth)' | sed -E 's@^cmd/batch/([^/]*)/.*@\1@' | sort -u)
           echo "Changed directories: $dirs"
           echo "dirs=$dirs" >> $GITHUB_ENV
 
