@@ -30,20 +30,40 @@ RUN GOOS=linux GOARCH=amd64 go build -o fifth-batch ./main.go
 
 # Final image for first application
 FROM debian:buster AS final-first
-COPY --from=build-first /app/first-batch /first-app
+COPY --from=build-first /app/first-batch /app/first-batch
+# バイナリに実行権限を付与
+RUN chmod +x /app/first-batch
+WORKDIR /app
+CMD ["./first-batch"]
 
 # Final image for second application
 FROM debian:buster AS final-second
-COPY --from=build-second /app/second-batch /second-app
+COPY --from=build-second /app/second-batch /app/second-batch
+# バイナリに実行権限を付与
+RUN chmod +x /app/second-batch
+WORKDIR /app
+CMD ["./second-batch"]
 
 # Final image for third application
 FROM debian:buster AS final-third
-COPY --from=build-third /app/third-batch /third-app
+COPY --from=build-third /app/third-batch /app/third-batch
+# バイナリに実行権限を付与
+RUN chmod +x /app/third-batch
+WORKDIR /app
+CMD ["./third-batch"]
 
 # Final image for fourth application
 FROM debian:buster AS final-fourth
-COPY --from=build-fourth /app/fourth-batch /fourth-app
+COPY --from=build-fourth /app/fourth-batch /app/fourth-batch
+# バイナリに実行権限を付与
+RUN chmod +x /app/fourth-batch
+WORKDIR /app
+CMD ["./fourth-batch"]
 
 # Final image for fifth application
 FROM debian:buster AS final-fifth
-COPY --from=build-fifth /app/fifth-batch /fifth-app
+COPY --from=build-fifth /app/fifth-batch /app/fifth-batch
+# バイナリに実行権限を付与
+RUN chmod +x /app/fifth-batch
+WORKDIR /app
+CMD ["./fifth-batch"]
