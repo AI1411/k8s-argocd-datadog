@@ -10,18 +10,15 @@ spec:
     templates:
       - name: main
         steps:
-          - - name: execute-first-step-1
-              templateRef:
-                name: first-step-workflow-template
-                template: first-step-job
-            - name: execute-first-step-2
-              templateRef:
-                name: first-step-workflow-template
-                template: first-step-job
-            - name: execute-first-step-3
-              templateRef:
-                name: first-step-workflow-template
-                template: first-step-job
+          - - name: execute-first-step
+              template: first-step-parallel
+              arguments:
+                parameters:
+                  - name: run-id
+                    value: "{{item}}"
+              withSequence:
+                start: "1"
+                end: "10"
           - - name: execute-second-step
               templateRef:
                 name: second-step-workflow-template
@@ -38,3 +35,10 @@ spec:
               templateRef:
                 name: fifth-step-workflow-template
                 template: fifth-step-job
+      - name: first-step-parallel
+        templateRef:
+          name: first-step-workflow-template
+          template: first-step-job
+        inputs:
+          parameters:
+            - name: run-id
