@@ -10,15 +10,15 @@ spec:
     templates:
       - name: main
         steps:
-          - - name: execute-first-step
+          - - name: execute-first-step-1
               templateRef:
                 name: first-step-workflow-template-1
                 template: first-step-job
-            - name: execute-first-step
+            - name: execute-first-step-2
               templateRef:
                 name: first-step-workflow-template-2
                 template: first-step-job
-            - name: execute-first-step
+            - name: execute-first-step-3
               templateRef:
                 name: first-step-workflow-template-3
                 template: first-step-job
