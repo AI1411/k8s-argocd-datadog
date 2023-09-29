@@ -54,3 +54,11 @@ kubectl create serviceaccount argocd -n argocd
 kubectl apply -f role.yaml -n argocd
 kubectl apply -f rolebinding.yaml -n argocd
 ```
+
+### create serviceaccount token
+```bash
+gcloud iam service-accounts create argocd --display-name "argocd"
+gcloud projects add-iam-policy-binding planet-4f7c6 --member=serviceAccount:argocd@planet-4f7c6.iam.gserviceaccount.com --role=roles/storage.admin
+gcloud iam service-accounts keys create key.json --iam-account argocd@planet-4f7c6.iam.gserviceaccount.com
+kubectl create secret generic token --from-file=key.json=key.json
+```
