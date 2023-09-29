@@ -10,7 +10,7 @@ spec:
     templates:
       - name: main
         steps:
-          - - name: execute-first-step-{{item}}
+          - - name: execute-first-step
               templateRef:
                 name: first-step-workflow-template
                 template: first-step-job
