@@ -10,6 +10,14 @@ spec:
     - name: second-step-job
       serviceAccountName: argocd
       container:
+        resources:
+          requests:
+            cpu: 750m
+            memory: 64Mi
+          limits:
+            cpu: 1000m
+            memory: 64Mi
+        restartPolicy: Never
         name: second-step-container
         image: asia-northeast1-docker.pkg.dev/planet-4f7c6/gke-argocd/second-step
         command:
