@@ -27,4 +27,3 @@ spec:
           - name: number
             valueFrom:
               jsonPath: "{.number}"
-              path: "/tmp/output.json"
