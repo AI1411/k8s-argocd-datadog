@@ -7,6 +7,30 @@ metadata:
 spec:
   entrypoint: first-step-job
   templates:
+    - name: main
+      steps:
+        - - name: first-step-job
+            template: first-step-job
+        - - name: generate-parameter
+            template: whalesay
+        - - name: consume-parameter
+            template: print-message
+            arguments:
+              parameters:
+                - name: message
+                  value: "{{steps.generate-parameter.outputs.parameters.hello-param}}"
+
+    - name: whalesay
+      container:
+        image: docker/whalesay:latest
+        command: [ sh, -c ]
+        args: [ "sleep 1; echo -n hello world > /tmp/hello_world.txt" ]
+        outputs:
+          parameters:
+            - name: hello-param
+              valueFrom:
+                default: "Foobar"   # Default value to use if retrieving valueFrom fails. If not provided workflow will fail instead
+                path: /tmp/hello_world.txt
     - name: first-step-job
       serviceAccountName: argocd
       container:
@@ -24,10 +48,5 @@ spec:
           - "./first-batch"
       script:
         image: alpine:latest
-        command: [sh]
+        command: [ sh ]
         source: TZ=JST-9 date -d "@$(( $(date +%s) - 24 * 60 * 60 ))" "+%Y-%m-%d" > /tmp/previous_day.txt
-      outputs:
-        parameters:
-          - name: previous_day
-            valueFrom:
-              path: /tmp/previous_day.txt
