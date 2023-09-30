@@ -5,12 +5,10 @@ metadata:
   labels:
     tags.datadoghq.com/env: "dev"
 spec:
-  entrypoint: first-step-job
+  entrypoint: output-parameter
   templates:
-    - name: main
+    - name: output-parameter
       steps:
-        - - name: first-step-job
-            template: first-step-job
         - - name: generate-parameter
             template: whalesay
         - - name: consume-parameter
@@ -19,17 +17,19 @@ spec:
               parameters:
                 - name: message
                   value: "{{steps.generate-parameter.outputs.parameters.hello-param}}"
+
     - name: whalesay
       container:
         image: docker/whalesay:latest
         command: [ sh, -c ]
         args: [ "sleep 1; echo -n hello world > /tmp/hello_world.txt" ]
-        outputs:
-          parameters:
-            - name: hello-param
-              valueFrom:
-                default: "Foobar"   # Default value to use if retrieving valueFrom fails. If not provided workflow will fail instead
-                path: /tmp/hello_world.txt
+      outputs:
+        parameters:
+          - name: hello-param
+            valueFrom:
+              default: "Foobar"   # Default value to use if retrieving valueFrom fails. If not provided workflow will fail instead
+              path: /tmp/hello_world.txt
+
     - name: print-message
       inputs:
         parameters:
@@ -38,18 +38,3 @@ spec:
         image: docker/whalesay:latest
         command: [ cowsay ]
         args: [ "{{inputs.parameters.message}}" ]
-    - name: first-step-job
-      serviceAccountName: argocd
-      container:
-        resources:
-          requests:
-            cpu: 750m
-            memory: 64Mi
-          limits:
-            cpu: 1000m
-            memory: 64Mi
-        restartPolicy: Never
-        name: first-step-container
-        image: asia-northeast1-docker.pkg.dev/planet-4f7c6/gke-argocd/first-step
-        command:
-          - "./first-batch"
