@@ -26,4 +26,8 @@ spec:
         parameters:
           - name: number
             valueFrom:
-              jsonPath: "{.number}"
+              path: "/tmp/output.json"
+      script:
+        image: alpine:latest
+        source: |
+          echo -n $(cat /tmp/output.json | jq -r .number) > /tmp/output.json
