@@ -3,9 +3,20 @@ kind: CronWorkflow
 metadata:
   name: combined-steps-cron
 spec:
+  #  並列実行の設定です。"Allow"と"Replace"と"Forbid"があります。
+  #  "Allow"は並列実行を許可します。"Replace"は同じ名前のワークフローが実行されている場合、新しいワークフローで置き換えます。
+  #  "Forbid"は同じ名前のワークフローが実行されている場合、新しいワークフローを実行しません。
+  concurrencyPolicy: "Forbid"
+  successfulJobsHistoryLimit:
   schedule: "0 0 * * *"
   workflowSpec:
+    ttlStrategy:
+      secondsAfterCompletion: 300 # ワークフローが完了した後に削除する時間の設定(秒)
+      secondsAfterSuccess: 300 # ワークフローが成功した後に削除する時間の設定(秒)
+      secondsAfterFailure: 300 # ワークフローが失敗した後に削除する時間の設定(秒)
     serviceAccountName: argocd
+    # Workflowが同時に最大何個のPodを生成できるかの制限
+    parallelism: 3
     entrypoint: main
     templates:
       - name: main
