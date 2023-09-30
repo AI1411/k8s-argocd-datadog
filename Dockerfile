@@ -34,7 +34,7 @@ COPY --from=build-first /app/first-batch /app/first-batch
 # バイナリに実行権限を付与
 RUN chmod +x /app/first-batch
 WORKDIR /app
-CMD ["./first-batch"]
+CMD ["sh", "-c", "./first-batch"]
 
 # Final image for second application
 FROM debian:buster AS final-second
