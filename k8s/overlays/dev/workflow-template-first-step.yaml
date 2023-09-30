@@ -10,15 +10,7 @@ spec:
     - name: first-step-job
       serviceAccountName: argocd
       container:
-        resources:
-          requests:
-            cpu: 750m
-            memory: 64Mi
-          limits:
-            cpu: 1000m
-            memory: 64Mi
-        restartPolicy: Never
         name: first-step-container
         image: asia-northeast1-docker.pkg.dev/planet-4f7c6/gke-argocd/first-step
-        command: [sh, -c]
-        args: ["./first-batch > /tmp/number.txt"]
+        command:
+          - "./first-batch"
