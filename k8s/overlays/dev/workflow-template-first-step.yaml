@@ -6,6 +6,7 @@ metadata:
     tags.datadoghq.com/env: "dev"
 spec:
   entrypoint: output-parameter
+  serviceAccountName: argocd
   templates:
     - name: output-parameter
       steps:
