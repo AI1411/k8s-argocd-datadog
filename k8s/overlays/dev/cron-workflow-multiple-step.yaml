@@ -25,13 +25,13 @@ spec:
               templateRef:
                 name: first-step-workflow-template
                 template: first-step-job
-              withSequence:
-                start: "1"
-                end: "10"
           - - name: execute-second-step
               templateRef:
                 name: second-step-workflow-template
                 template: second-step-job
+              withSequence:
+                start: "1"
+                end: "10"
           - - name: execute-third-step
               templateRef:
                 name: third-step-workflow-template
