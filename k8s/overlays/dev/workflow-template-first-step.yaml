@@ -5,22 +5,20 @@ metadata:
   labels:
     tags.datadoghq.com/env: "dev"
 spec:
-  entrypoint: first-step-job
+  entrypoint: output-parameter
   templates:
     - name: first-step-job
       serviceAccountName: argocd
-      script:
-        image: asia-northeast1-docker.pkg.dev/planet-4f7c6/gke-argocd/first-step
-        command: [ bash ]
-        source: |
-          # Assuming that the command outputs JSON to stdout
-          ./first-batch > /tmp/number.txt
-    - name: output-result
-      inputs:
-        artifacts:
-          - name: number-file
-            path: /tmp/number.txt
       container:
-        image: busybox
-        command: [ cat ]
-        args: [ /tmp/number.txt ]
+        resources:
+          requests:
+            cpu: 750m
+            memory: 64Mi
+          limits:
+            cpu: 1000m
+            memory: 64Mi
+        restartPolicy: Never
+        name: first-step-container
+        image: asia-northeast1-docker.pkg.dev/planet-4f7c6/gke-argocd/first-step
+        command:
+          - "./first-batch > /tmp/number.txt"
