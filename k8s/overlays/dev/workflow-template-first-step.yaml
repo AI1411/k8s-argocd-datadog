@@ -21,7 +21,6 @@ spec:
         name: first-step-container
         image: asia-northeast1-docker.pkg.dev/planet-4f7c6/gke-argocd/first-step
         command:
-          - "/bin/sh"
-        args:
-          - "-c"
-          - "./first-batch > /tmp/number.txt"
+          - sh
+          - c
+          - "./first-batch"
