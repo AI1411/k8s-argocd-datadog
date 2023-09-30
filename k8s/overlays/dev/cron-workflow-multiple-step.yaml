@@ -24,6 +24,15 @@ spec:
               templateRef:
                 name: first-step-workflow-template
                 template: first-step-job
+              arguments:
+                parameters:
+                  - name: response
+                    value: "{{steps.execute-first-step.outputs.parameters.number}}"
+              outputs:
+                parameters:
+                  - name: number
+                    valueFrom:
+                      jsonPath: '{.number}'
           - - name: execute-second-step
               templateRef:
                 name: second-step-workflow-template
