@@ -46,7 +46,3 @@ spec:
         image: asia-northeast1-docker.pkg.dev/planet-4f7c6/gke-argocd/first-step
         command:
           - "./first-batch"
-      script:
-        image: alpine:latest
-        command: [ sh ]
-        source: TZ=JST-9 date -d "@$(( $(date +%s) - 24 * 60 * 60 ))" "+%Y-%m-%d" > /tmp/previous_day.txt
