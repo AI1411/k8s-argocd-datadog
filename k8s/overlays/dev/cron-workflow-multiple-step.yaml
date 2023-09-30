@@ -16,7 +16,6 @@ spec:
       secondsAfterFailure: 300 # ワークフローが失敗した後に削除する時間の設定(秒)
     serviceAccountName: argocd
     # Workflowが同時に最大何個のPodを生成できるかの制限
-    parallelism: 3
     entrypoint: main
     templates:
       - name: main

@@ -22,3 +22,9 @@ spec:
         image: asia-northeast1-docker.pkg.dev/planet-4f7c6/gke-argocd/first-step
         command:
           - "./first-batch"
+      outputs:
+        parameters:
+          - name: number
+            valueFrom:
+              jsonPath: "{.number}"
+              path: "/tmp/output.json"
