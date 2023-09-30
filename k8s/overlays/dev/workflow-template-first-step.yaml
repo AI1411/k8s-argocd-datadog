@@ -20,5 +20,5 @@ spec:
         restartPolicy: Never
         name: first-step-container
         image: asia-northeast1-docker.pkg.dev/planet-4f7c6/gke-argocd/first-step
-        command:
-          - "./first-batch > /tmp/number.txt"
+        command: [sh, -c]
+        args: ["./first-batch > /tmp/number.txt"]
