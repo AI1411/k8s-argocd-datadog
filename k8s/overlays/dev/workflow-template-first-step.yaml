@@ -5,7 +5,7 @@ metadata:
   labels:
     tags.datadoghq.com/env: "dev"
 spec:
-  entrypoint: output-parameter
+  entrypoint: first-step-job
   templates:
     - name: first-step-job
       serviceAccountName: argocd
