@@ -22,12 +22,6 @@ WORKDIR /app
 COPY cmd/batch/fourth .
 RUN GOOS=linux GOARCH=amd64 go build -o fourth-batch ./main.go
 
-# Build stage for fifth application
-FROM golang:1.20 AS build-fifth
-WORKDIR /app
-COPY cmd/batch/fifth .
-RUN GOOS=linux GOARCH=amd64 go build -o fifth-batch ./main.go
-
 # Final image for first application
 FROM debian:buster AS final-first
 COPY --from=build-first /app/first-batch /app/first-batch
@@ -59,11 +53,3 @@ COPY --from=build-fourth /app/fourth-batch /app/fourth-batch
 RUN chmod +x /app/fourth-batch
 WORKDIR /app
 CMD ["./fourth-batch"]
-
-# Final image for fifth application
-FROM debian:buster AS final-fifth
-COPY --from=build-fifth /app/fifth-batch /app/fifth-batch
-# バイナリに実行権限を付与
-RUN chmod +x /app/fifth-batch
-WORKDIR /app
-CMD ["./fifth-batch"]
