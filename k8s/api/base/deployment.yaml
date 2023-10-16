@@ -13,10 +13,3 @@ spec:
     metadata:
       labels:
         app: api
-    spec:
-      containers:
-        - name: api-container
-          image: asia-northeast1-docker.pkg.dev/planet-4f7c6/gke-argocd/api:latest
-          ports:
-            - containerPort: 8080
----
