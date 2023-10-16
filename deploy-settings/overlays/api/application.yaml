@@ -1,0 +1,31 @@
+# NOTE: Commented areas could be edited.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dev-planet-api
+  namespace: argocd
+  labels:
+    service: planet-api
+    cluster: gke-argocd
+    env: dev
+spec:
+  project: dev-planet-api
+  source:
+    repoURL: https://github.com/AI1411/k8s-argocd-datadog
+    path: k8s/api/overlays/dev
+    targetRevision: main
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - Validate=true
+      - CreateNamespace=false
+      - PrunePropagationPolicy=background
+      - PruneLast=false
+      - ApplyOutOfSyncOnly=true
+      - Replace=false
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
