@@ -36,3 +36,10 @@ services:
       target: final-fifth
     command: /fifth-app
     image: asia-northeast1-docker.pkg.dev/${GCP_PROJECT_ID}/gke-argocd/fifth-step
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: final-api
+    command: /api
+    image: asia-northeast1-docker.pkg.dev/${GCP_PROJECT_ID}/gke-argocd/api-step

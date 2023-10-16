@@ -28,6 +28,11 @@ WORKDIR /app
 COPY cmd/batch/fifth .
 RUN GOOS=linux GOARCH=amd64 go build -o fifth-batch ./main.go
 
+FROM golang:1.20 AS build-api
+WORKDIR /app
+COPY cmd/api .
+RUN GOOS=linux GOARCH=amd64 go build -o api ./main.go
+
 # Final image for first application
 FROM debian:buster AS final-first
 COPY --from=build-first /app/first-batch /app/first-batch
@@ -67,3 +72,10 @@ COPY --from=build-fifth /app/fifth-batch /app/fifth-batch
 RUN chmod +x /app/fifth-batch
 WORKDIR /app
 CMD ["./fifth-batch"]
+
+FROM debian:buster AS final-api
+COPY --from=build-api /app/api /app/api
+# バイナリに実行権限を付与
+RUN chmod +x /app/api
+WORKDIR /app
+CMD ["./api"]
